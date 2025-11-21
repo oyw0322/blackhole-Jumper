@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>블랙홀 생존 점프 게임</title>
+    
+    <link rel="stylesheet" href="css/style.css"> 
+    
+</head>
+<body>
+    <div id="game-container"> 
+        <canvas id="gameCanvas" width="400" height="600"></canvas>
+
+        <div id="startScreen" class="overlay-screen">
+            <h1>🌌 블랙홀에서 살아남기 게임</h1>
+            <div class="rules-box">
+                <h2>🎮 게임 규칙</h2>
+                <p><strong>이동:</strong> 왼쪽 방향키 와 오른쪽 방향키</p>
+                <p><strong>점프:</strong> 스페이스바</p>
+                <p>아이템: <strong>쉴드</strong>: 운석을 한번 막아줍니다.</p>
+                <p>블랙홀에 빨려들어가지 말고 오랫동안 살아남으세요.</p>
+            </div>
+            <button id="startButton" class="action-button">게임 시작</button>
+        </div>
+
+        <div id="gameOverScreen" class="overlay-screen" style="display: none;">
+            <p>GAME OVER</p>
+            <p id="finalScore"></p>
+            <button id="restartButton" class="action-button">재시작</button>
+        </div>
+    </div> 
+
+    <script>
+        document.getElementById('startButton').addEventListener('click', function() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('gameOverScreen').style.display = 'none';
+
+            var script = document.createElement('script');
+            script.src = 'js/blackhole2.js'; 
+            script.onload = function() {
+                if (typeof startGame === 'function') {
+                    startGame();
+                }
+            };
+            document.body.appendChild(script);
+        });
+
+        document.getElementById('restartButton').addEventListener('click', function() {
+            document.getElementById('gameOverScreen').style.display = 'none';
+            if (typeof restartGame === 'function') { 
+                restartGame();
+            } else if (typeof startGame === 'function') { 
+                startGame();
+            }
+        });
+    </script>
+</body>
+</html>

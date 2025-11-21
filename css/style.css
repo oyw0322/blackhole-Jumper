@@ -1,0 +1,124 @@
+/* ======================
+    전체 페이지 설정 및 게임 화면 중앙 정렬
+====================== */
+/* 뷰포트 전체를 사용하고 게임 컨테이너를 중앙에 배치 */
+body {
+    /* 기본 마진/패딩 제거 */
+    margin: 0;
+    padding: 0; 
+    
+    /* 뷰포트 전체 높이를 사용하도록 설정 */
+    min-height: 100vh;
+    
+    /* Flexbox 활성화 */
+    display: flex;
+    
+    /* 수평 중앙 정렬 */
+    justify-content: center;
+    
+    /* 수직 중앙 정렬 (화면 정중앙) */
+    align-items: center; 
+    
+    /* (선택 사항) 배경색 설정 */
+    background-color: #05000F;
+}
+
+/* 게임 컨테이너 (#game-container) 설정 */
+#game-container {
+    /* 캔버스 너비에 맞게 설정 */
+    width: 400px;
+    /* (선택 사항) 게임 화면 주변에 그림자 또는 테두리 추가 */
+    /* box-shadow: 0 0 40px rgba(138, 180, 255, 0.4); */
+    position: relative; /* 오버레이 화면의 기준점으로 사용 */
+}
+
+/* 캔버스 요소 */
+#gameCanvas {
+    /* 캔버스가 블록 레벨 요소로 작동하게 합니다. */
+    display: block;
+}
+
+/* ======================
+    우주 느낌 오버레이 공통 UI
+====================== */
+#startScreen, #gameOverScreen {
+    /* position: fixed; 대신 #game-container를 기준으로 position: absolute;를 사용하거나 
+       #game-container가 중앙에 왔기 때문에 fixed를 유지하여 화면 전체를 덮어도 괜찮습니다. */
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100vw; 
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at center, rgba(40, 0, 80, 0.9), rgba(5, 0, 15, 0.97));
+    backdrop-filter: blur(6px);
+    z-index: 999; /* 최상단 */
+    color: #fff; /* 오버레이 텍스트 색상 추가 (아래 overlay-screen에서 가져옴) */
+    text-align: center; /* 오버레이 텍스트 정렬 추가 (아래 overlay-screen에서 가져옴) */
+}
+
+.overlay-screen {
+    /* #startScreen, #gameOverScreen에 대부분의 스타일이 적용되었으므로, 여기서는 애니메이션만 남깁니다. */
+    /* position: absolute; 등 중복되거나 충돌하는 속성은 제거했습니다. */
+    z-index: 20; /* z-index가 999보다 낮으므로, startScreen/gameOverScreen이 위에 표시됩니다. */
+    animation: fadeIn 1.2s ease-out;
+}
+
+.overlay-screen h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-shadow: 0 0 10px #8ab4ff, 0 0 25px #4e9bff;
+}
+
+/* 게임 규칙 박스 */
+.rules-box {
+    width: 60%;
+    border: 1px solid rgba(120, 180, 255, 0.6);
+    background: rgba(255,255,255,0.05);
+    padding: 18px 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 14px rgba(150, 200, 255, 0.2);
+    backdrop-filter: blur(5px);
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+/* 버튼 */
+.action-button {
+    margin-top: 25px;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    letter-spacing: 2px;
+    color: black;
+    background: linear-gradient(135deg, #ffe24b, #ffb800);
+    box-shadow: 0 0 15px rgba(255, 220, 80, 0.6);
+    transition: transform 0.2s, box-shadow 0.4s;
+}
+
+.action-button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 25px rgba(255, 230, 120, 0.9);
+}
+
+/* GAME OVER 스타일 */
+#gameOverScreen p:first-child {
+    font-size: 50px;
+    letter-spacing: 6px;
+    color: #ff4f6a;
+    text-shadow: 0 0 12px #ff3357, 0 0 26px #ff0030;
+}
+
+/* 애니메이션 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
